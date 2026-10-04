@@ -1,64 +1,76 @@
 from reminder import set_reminder
 
+class Reminder:
+
+    def __init__(self) -> None:
+        self.type = None
+        self.duration = None
+        self.message = ""
+
+
 def main():
 
-    tags = {"-d", "-m", "-s"}
+    tags = {"in", "for"}
 
-    reminder_settings = {
-        "duration": 0,
-        "message": ""
-    }
 
-    context = "none"
+    reminders = []
 
-    prompt: str = input("ANVReminder BETA...\n")
+    i=0
+    
 
-    tokens: list = prompt.split()
+    while True:
+        prompt: str = input("ANVReminder BETA...\nType 'exit' to exit\n")
 
-    for token in tokens:
+        context = "none"
 
-        if context == "none" and token == "exit":
-            print("Exiting...")
-            break
+        reminders.append(Reminder())
+        tokens: list = prompt.split()
 
-        if token in tags:
+        for token in tokens:
 
-            match token:
+            if context == "none" and token == "exit":
+                print("Exiting...")
+                context = "exit"
+                break
 
-                case "-m":
-                    context = "message"
-                    continue
+            if context!="message" and token in tags:
 
-                case "-d":
-                    context = "duration"
-                    continue
+                match token:
 
-                case "-s":
-                    context = "none"
+                    case "for":
+                        context = "message"
+                        continue
 
-                    converted_duration = convert_duration(reminder_settings["duration"])
-                    set_reminder(reminder_settings["message"], converted_duration)
-                    break
+                    case "in":
+                        context = "duration"
+                        continue
 
-        match context:
+            match context:
 
-            case "none":
-                raise ValueError("Argument given for an unknown context type.\nDid you miss a tag?")
+                case "none":
+                    raise ValueError("Argument given for an unknown context type.\nDid you miss a tag?")
 
-            case "message":
-                reminder_settings[context] += token + " "
+                case "message":
+                    reminders[i].message += token + " "
 
-                if token[-1] == "\"":
-                    reminder_settings[context] = reminder_settings[context].strip().strip('"\'')
-                    print("Set message to", reminder_settings[context])
+                    if token[-1] == "\"":
+                        reminders[i].message = reminders[i].message.strip().strip('"\'')
+                        print("Set message to", reminders[i].message)
+                        context="none"
+                    
+
+                case "duration":
+                    reminders[i].duration = token
+                    print("Set duration to", reminders[i].duration)
                     context="none"
-                pass
 
-            case "duration":
-                reminder_settings[context] = token
-                print("Set duration to", reminder_settings[context])
-                context="none"
-                pass
+        if context == "exit":
+            break 
+                    
+
+        converted_duration = convert_duration(reminders[i].duration)
+        set_reminder(reminders[i].message, converted_duration)
+        i+=1
 
 def convert_duration(duration: str) -> int:
     units = {
@@ -76,13 +88,6 @@ def convert_duration(duration: str) -> int:
             return int(value) * multiplier
 
     return int(duration)
-
-
-
-
-
-
-
 
 
 
