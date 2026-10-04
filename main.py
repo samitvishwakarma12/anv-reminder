@@ -1,4 +1,3 @@
-import time
 from reminder import set_reminder
 
 def main():
