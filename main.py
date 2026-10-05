@@ -1,4 +1,5 @@
 from reminder import set_reminder
+import tkinter as tk
 
 class Reminder:
 
@@ -10,7 +11,10 @@ class Reminder:
 
 def main():
 
-    tags = {"in", "for"}
+    root = tk.Tk()
+    root.withdraw()
+
+    tags = {"in", "for", "remind"}
 
 
     reminders = []
@@ -21,14 +25,14 @@ def main():
     while True:
         prompt: str = input("ANVReminder BETA...\nType 'exit' to exit\n")
 
-        context = "none"
+        context: None | str = None
 
         reminders.append(Reminder())
         tokens: list = prompt.split()
 
         for token in tokens:
 
-            if context == "none" and token == "exit":
+            if context == None and token == "exit":
                 print("Exiting...")
                 context = "exit"
                 break
@@ -36,6 +40,18 @@ def main():
             if context!="message" and token in tags:
 
                 match token:
+
+                    case "remind":
+
+                        if context == None:
+                            if reminders[i].type == None:
+                                reminders[i].type = "nonce" # One-off
+                                continue
+                            else:
+                                raise SyntaxError("Repeated reminder type declaration. Remind must only be of a single type.")
+
+                        else:
+                            raise ValueError("Cannot use 'remind' for a context of", context)
 
                     case "for":
                         context = "message"
@@ -47,7 +63,7 @@ def main():
 
             match context:
 
-                case "none":
+                case None:
                     raise ValueError("Argument given for an unknown context type.\nDid you miss a tag?")
 
                 case "message":
@@ -56,21 +72,23 @@ def main():
                     if token[-1] == "\"":
                         reminders[i].message = reminders[i].message.strip().strip('"\'')
                         print("Set message to", reminders[i].message)
-                        context="none"
+                        context=None
                     
 
                 case "duration":
                     reminders[i].duration = token
                     print("Set duration to", reminders[i].duration)
-                    context="none"
+                    context=None
 
         if context == "exit":
+            root.destroy()
             break 
                     
 
         converted_duration = convert_duration(reminders[i].duration)
-        set_reminder(reminders[i].message, converted_duration)
+        set_reminder(root, reminders[i].message, converted_duration)
         i+=1
+    root.mainloop()
 
 def convert_duration(duration: str) -> int:
     units = {
