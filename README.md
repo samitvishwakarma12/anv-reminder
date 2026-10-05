@@ -2,30 +2,32 @@
 
 A lightweight command-line reminder application built from scratch in Python.
 
-ANVReminder lets you create a reminder using a small custom command syntax and displays a Tkinter notification when the specified duration has elapsed.
+ANVReminder lets you create reminders directly from the terminal using a small custom command syntax and displays a Tkinter notification when the specified duration has elapsed.
 
 ## Beta
 
-This is an early beta release. The current goal is to establish the core reminder functionality and experiment with the command syntax before adding more advanced features.
+This is an early beta release. The current goal is to establish the core reminder functionality and develop the command syntax before adding more advanced features.
 
 ## Usage
 
-Start ANVReminder and enter a command:
+Start ANVReminder and enter a reminder command:
 
 ```text
--m "Drink some water" -d 30m -s
+remind in 30m for "Drink some water"
 ```
 
-### Available options
+ANVReminder will set the reminder and trigger a notification after the specified duration.
 
-| Option | Description               |
-| ------ | ------------------------- |
-| `-m`   | Set the reminder message  |
-| `-d`   | Set the reminder duration |
-| `-s`   | Submit the reminder       |
-| `exit` | Exit the program          |
+### Available Syntax
 
-### Duration formats
+| Syntax | Description |
+|--------|-------------|
+| `remind` | Creates a one-off (`nonce`) reminder |
+| `in` | Specifies the reminder duration |
+| `for` | Specifies the reminder message |
+| `exit` | Exits the program |
+
+### Duration Formats
 
 ANVReminder currently accepts:
 
@@ -39,15 +41,33 @@ ANVReminder currently accepts:
 
 A number without a unit is interpreted as milliseconds.
 
-## Example
+## Examples
+
+### Setting a Reminder
 
 ```text
 ANVReminder BETA...
 
--m "Drink some water" -d 30m -s
+remind in 30m for "Drink some water"
 ```
 
 After 30 minutes, ANVReminder opens a notification window displaying the message.
+
+### Setting Multiple Reminders
+
+Multiple reminders can be created during the same session:
+
+```text
+remind in 20m for "Check the oven"
+remind in 1h for "Take a break"
+remind in 2h for "Call Tom"
+```
+
+### Exiting
+
+```text
+exit
+```
 
 ## Current Architecture
 
@@ -60,29 +80,31 @@ Tokenization
     ↓
 Parser
     ↓
-Reminder Settings
+Reminder
     ↓
 Duration Conversion
     ↓
-Reminder
+Reminder Scheduler
     ↓
 Tkinter Notification
 ```
 
 The command parser was implemented from scratch rather than relying on a command-line argument parsing library.
 
+Each reminder currently has a type. The `remind` command assigns the `nonce` type, representing a one-off reminder. The reminder type system is currently groundwork for future reminder types such as recurring reminders.
+
 ## Planned Features
 
 Possible future improvements include:
 
-* Multiline command input
 * Recurring reminders
-* Multiple simultaneous reminders
+* Reminder management and cancellation
 * Persistent reminders
 * Better input validation
 * Improved notification UI
 * More flexible duration syntax
-* A more expressive command language
+* More expressive command syntax
+* Reminder presets and aliases
 
 ## Requirements
 
@@ -91,4 +113,6 @@ Possible future improvements include:
 
 ## Status
 
-**Open Beta — v0.1.0**
+**Open Beta**
+
+The project is actively being developed and the command syntax is subject to change.
