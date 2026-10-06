@@ -10,7 +10,7 @@ def tokenizer(input: str) -> list:
 
 
 
-def parser(tokens: list[str], reminder: Reminder) -> str | None:
+def parser(tokens: list[str], reminder: Reminder) -> None:
 
     context: None | str = None
 

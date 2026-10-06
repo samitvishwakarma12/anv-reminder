@@ -58,7 +58,7 @@ def main():
 
         reminders.append(Reminder())
 
-        action: str | None = parser(tokens, reminders[i])
+        parser(tokens, reminders[i])
 
         try:
             reminders[i].validate()
@@ -66,13 +66,6 @@ def main():
 
         except ValueError as e:
             print("ValueError:", e)
-
-
-        if action == "exit":
-
-            gui.destroy()
-
-            break
 
             # *TODO make exit not quit the background reminder process*
 
