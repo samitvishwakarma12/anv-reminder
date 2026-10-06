@@ -36,15 +36,11 @@ class Reminder:
 
 
 
-
-
 def tokenizer(input: str) -> list:
 
     tokens = input.split()
 
     return tokens
-
-
 
 
 
@@ -118,8 +114,6 @@ def parser(tokens: list[str], reminder: Reminder) -> str | None:
 
 
 
-
-
 def convert_duration(duration: str) -> int:
 
     units = {
@@ -145,8 +139,6 @@ def convert_duration(duration: str) -> int:
             return int(value) * multiplier
 
     return int(duration)
-
-
 
 
 
