@@ -25,8 +25,9 @@ Note: Development plans are subject to change.
 * [x] Improve input validation
 
 ## v0.2.2
-* [ ] Fix tkinter mainloop and exit bugs
 * [x] Update documentation
+* [ ] Move reminder submission into `Reminder` class
+* [ ] Fix tkinter mainloop and exit bugs
 
 ## v0.3.0
 * [ ] Add persistent data storage of reminders

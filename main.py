@@ -19,13 +19,13 @@ class Reminder:
         self.type = reminder_type
 
 
-    def set_reminder_message(self, message: str):
+    def set_message(self, message: str):
         self.message = message
 
-    def set_reminder_duration(self, duration: int):
+    def set_duration(self, duration: int):
         self.duration = duration
 
-    def validate_reminder(self):
+    def validate(self):
         if self.duration is None:
             raise ValueError("Unspecified reminder duration. Use 'in' tag to specify the duration of reminder.\nUsage: 'in <duration>' Example: remind for \"Give Tom a massage\" in 5h")
 
@@ -92,7 +92,7 @@ def parser(tokens: list[str], reminder: Reminder) -> str | None:
 
                         message = message.strip().strip('"\'')
 
-                        reminder.set_reminder_message(message)
+                        reminder.set_message(message)
 
                         print("Set message to", reminder.message)
 
@@ -106,7 +106,7 @@ def parser(tokens: list[str], reminder: Reminder) -> str | None:
 
                     converted_duration = convert_duration(duration)
 
-                    reminder.set_reminder_duration(converted_duration)
+                    reminder.set_duration(converted_duration)
 
                     print("Set duration to", reminder.duration)
 
@@ -173,7 +173,7 @@ def main():
         action: str | None = parser(tokens, reminders[i])
 
         try:
-            reminders[i].validate_reminder()
+            reminders[i].validate()
             set_reminder(root, reminders[i].message, reminders[i].duration) # type: ignore
 
         except ValueError as e:
