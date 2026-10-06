@@ -7,7 +7,7 @@ from data import Database
 class Reminder:
     reminder_types = {"remind", "repeat"}
 
-    def __init__(self, id) -> None:
+    def __init__(self) -> None:
         self.id = id
         self.type = None
         self.duration = None
@@ -19,6 +19,8 @@ class Reminder:
             raise ValueError(f"Invalid reminder type: {reminder_type}")
         self.type = reminder_type
 
+    def set_id(self, id: int):
+            self.id = int
 
     def set_message(self, message: str):
         self.message = message
@@ -40,11 +42,8 @@ def main():
     gui = GUI()
     database = Database()
 
-    reminders: list[Reminder] = []
-
-    i=0
-
     while True:
+        reminder = Reminder()
 
         prompt: str = input("ANVReminder BETA...\nType 'exit' to exit\n")
 
@@ -58,23 +57,20 @@ def main():
 
             break
 
+
         tokens = tokenizer(prompt)
 
-        reminders.append(Reminder(i))
-
-        parser(tokens, reminders[i])
+        parser(tokens, reminder)
 
         try:
-            reminders[i].validate()
-            database.add_reminder(reminders[i].type, reminders[i].message, reminders[i].duration) # type: ignore
-            gui.set_reminder(reminders[i].message, reminders[i].duration)
+            reminder.validate()
+            reminder.set_id = database.add_reminder(reminder.type, reminder.message, reminder.duration) # type: ignore
+            gui.set_reminder(reminder.message, reminder.duration)
 
         except ValueError as e:
             print("ValueError:", e)
 
             # *TODO make exit not quit the background reminder process*
-
-        i+=1
 
     gui.run()
 

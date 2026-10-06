@@ -19,11 +19,14 @@ class Database:
         self.conn.commit()
 
     def add_reminder(self, reminder_type: str, message: str, duration: int):
-        self.conn.execute(
+        cursor = self.conn.cursor()
+        cursor.execute(
             "INSERT INTO reminders (type, message, duration) VALUES (?, ?, ?)",
             (reminder_type, message, duration)
         )
         self.conn.commit()
+
+        return cursor.lastrowid
 
     def get_reminders(self):
         cursor = self.conn.execute(
