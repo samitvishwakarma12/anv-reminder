@@ -1,4 +1,5 @@
 # Development Plan
+Note: Development plans are subject to change.
 
 ## v0.1.0
 
@@ -18,7 +19,21 @@
 * [x] Refactor reminder handling into an object-oriented design
 * [x] Separate tokenization and parsing
 * [x] Improve reminder state management
-* [ ] Release v0.2.0
+* [x] Release v0.2.0
+
+## v0.2.1
+* [ ] Improve input validation
+
+## v0.2.2
+* [ ] Fix tkinter mainloop bugs
+* [ ] Update documentation
+
+## v0.3.0
+* [ ] Add persistent data storage of reminders
+* [ ] Persistent reminders on startup
+
+## v0.3.1
+* [ ] Introduce CHANGELOG
 
 ## v1.0.0
 
@@ -26,15 +41,13 @@
 * [ ] Define syntax for repeating reminders
 * [ ] Add reminder cancellation
 * [ ] Add active reminder listing
-* [ ] Improve input validation
 * [ ] Update documentation
 * [ ] Improve overall stability
 * [ ] Release v1.0.0
 
 ## v1.1.0
 
-* [ ] Persistent reminders
-* [ ] Database support
+* [ ] Improve Database support
 * [ ] Improve reminder management
 * [ ] Provide better installation method
 * [ ] Allow for more complex time inputs (e.g. 1h 45m 39s)
@@ -45,3 +58,4 @@
 * [ ] More flexible scheduling
 * [ ] Configuration
 * [ ] Better GUI
+* [ ] Launch support for shell script
