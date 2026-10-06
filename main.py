@@ -1,111 +1,193 @@
-from reminder import set_reminder
+from gui import set_reminder
+
 import tkinter as tk
 
+
+
+
+
 class Reminder:
+    reminder_types = {"remind", "repeat"}
 
     def __init__(self) -> None:
         self.type = None
-        self.duration = None
+        self.duration = 0
         self.message = ""
 
 
-def main():
-
-    root = tk.Tk()
-    root.withdraw()
-
-    tags = {"in", "for", "remind"}
+    def set_reminder_type(self, reminder_type: str):
+        if reminder_type not in self.reminder_types:
+            raise ValueError(f"Invalid reminder type: {reminder_type}")
+        self.type = reminder_type
 
 
-    reminders = []
+    def set_reminder_message(self, message: str):
+        self.message = message
 
-    i=0
-    
+    def set_reminder_duration(self, duration: int):
+        self.duration = duration
 
-    while True:
-        prompt: str = input("ANVReminder BETA...\nType 'exit' to exit\n")
 
-        context: None | str = None
 
-        reminders.append(Reminder())
-        tokens: list = prompt.split()
 
-        for token in tokens:
 
-            if context == None and token == "exit":
-                print("Exiting...")
-                context = "exit"
-                break
+def tokenizer(input: str) -> list:
 
-            if context!="message" and token in tags:
+    tokens = input.split()
 
-                match token:
+    return tokens
 
-                    case "remind":
 
-                        if context == None:
-                            if reminders[i].type == None:
-                                reminders[i].type = "nonce" # One-off
-                                continue
-                            else:
-                                raise SyntaxError("Repeated reminder type declaration. Reminder must only be of a single type.")
 
-                        else:
-                            raise ValueError("Cannot use 'remind' for a context of", context)
 
-                    case "for":
-                        context = "message"
-                        continue
 
-                    case "in":
-                        context = "duration"
-                        continue
+def parser(tokens: list[str], reminder: Reminder) -> str | None:
+
+    context: None | str = None
+
+    tags = {
+        "remind", "for", "in"
+    }
+
+    message = ""
+
+    for token in tokens:
+
+        if context == None and token in tags:  
+
+            match token:   
+
+                case "remind":
+
+                    reminder.set_reminder_type("remind")
+
+                case "for":
+
+                    context = "message"
+
+                    continue
+
+                case "in":
+
+                    context = "duration"
+
+                    continue
+
+        else:
 
             match context:
 
                 case None:
+
                     raise ValueError("Argument given for an unknown context type.\nDid you miss a tag?")
 
                 case "message":
-                    reminders[i].message += token + " "
+
+                    message += token + " "
 
                     if token[-1] == "\"":
-                        reminders[i].message = reminders[i].message.strip().strip('"\'')
-                        print("Set message to", reminders[i].message)
+
+                        message = message.strip().strip('"\'')
+
+                        reminder.set_reminder_message(message)
+
+                        print("Set message to", reminder.message)
+
                         context=None
-                    
+
+
 
                 case "duration":
-                    reminders[i].duration = token
-                    print("Set duration to", reminders[i].duration)
+
+                    duration = token
+
+                    converted_duration = convert_duration(duration)
+
+                    reminder.set_reminder_duration(converted_duration)
+
+                    print("Set duration to", reminder.duration)
+
                     context=None
 
-        if context == "exit":
-            root.destroy()
-            break 
-                    
 
-        converted_duration = convert_duration(reminders[i].duration)
-        set_reminder(root, reminders[i].message, converted_duration)
-        i+=1
-    root.mainloop()
+
+
 
 def convert_duration(duration: str) -> int:
+
     units = {
+
         "ms": 1,
+
         "s": 1000,
+
         "m": 60_000,
+
         "h": 3_600_000
+
     }
 
     duration = duration.lower()
 
     for unit, multiplier in units.items():
+
         if duration.endswith(unit):
+
             value = duration[:-len(unit)]
+
             return int(value) * multiplier
 
     return int(duration)
+
+
+
+
+
+def main():
+
+    root = tk.Tk()
+
+    root.withdraw()
+
+    reminders = []
+
+    i=0
+
+    while True:
+
+        prompt: str = input("ANVReminder BETA...\nType 'exit' to exit\n")
+
+        if not prompt:
+
+            continue
+
+        if prompt == "exit":
+
+            root.destroy()
+
+            break
+
+        tokens = tokenizer(prompt)
+
+        reminders.append(Reminder())
+
+        action: str | None = parser(tokens, reminders[i])
+
+        set_reminder(root, reminders[i].message, reminders[i].duration)
+
+        if action == "exit":
+
+            root.destroy()
+
+            break
+
+            # *TODO make exit not quit the background reminder process*
+
+        
+
+        i+=1
+
+    root.mainloop()
 
 
 
