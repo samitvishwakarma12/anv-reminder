@@ -1,12 +1,14 @@
 from gui import GUI
 from parser import parser, tokenizer
+from data import Database
 
 
 
 class Reminder:
     reminder_types = {"remind", "repeat"}
 
-    def __init__(self) -> None:
+    def __init__(self, id) -> None:
+        self.id = id
         self.type = None
         self.duration = None
         self.message = "" # Empty messages are allowed
@@ -36,6 +38,8 @@ class Reminder:
 def main():
 
     gui = GUI()
+    database = Database()
+
     reminders: list[Reminder] = []
 
     i=0
@@ -56,12 +60,13 @@ def main():
 
         tokens = tokenizer(prompt)
 
-        reminders.append(Reminder())
+        reminders.append(Reminder(i))
 
         parser(tokens, reminders[i])
 
         try:
             reminders[i].validate()
+            database.add_reminder(reminders[i].type, reminders[i].message, reminders[i].duration) # type: ignore
             gui.set_reminder(reminders[i].message, reminders[i].duration)
 
         except ValueError as e:
