@@ -48,7 +48,7 @@ def main():
                                 reminders[i].type = "nonce" # One-off
                                 continue
                             else:
-                                raise SyntaxError("Repeated reminder type declaration. Remind must only be of a single type.")
+                                raise SyntaxError("Repeated reminder type declaration. Reminder must only be of a single type.")
 
                         else:
                             raise ValueError("Cannot use 'remind' for a context of", context)
