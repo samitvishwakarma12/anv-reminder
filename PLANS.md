@@ -25,7 +25,7 @@ Note: Development plans are subject to change.
 * [ ] Improve input validation
 
 ## v0.2.2
-* [ ] Fix tkinter mainloop bugs
+* [ ] Fix tkinter mainloop and exit bugs
 * [ ] Update documentation
 
 ## v0.3.0

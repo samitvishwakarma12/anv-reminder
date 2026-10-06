@@ -26,11 +26,11 @@ class Reminder:
         self.duration = duration
 
     def validate_reminder(self):
-        if not self.duration:
-            raise SyntaxError("Unspecified reminder duration. Use 'in' tag to specify the duration of reminder.\nUsage: 'in <duration>' Example: remind for \"Give Tom a massage\" in 5h")
+        if self.duration is None:
+            raise ValueError("Unspecified reminder duration. Use 'in' tag to specify the duration of reminder.\nUsage: 'in <duration>' Example: remind for \"Give Tom a massage\" in 5h")
 
-        if not self.type:
-            raise SyntaxError("Unspecified reminder duration. Use 'remind' or 'repeat' tag to specify the duration of reminder.\nEx: 'remind for \"Give Tom a massage\" in 1h'")
+        if self.type is None:
+            raise ValueError("Unspecified reminder type. Use 'remind' or 'repeat' tag to specify the duration of reminder.\nEx: 'remind for \"Give Tom a massage\" in 1h'")
     
 
 
@@ -148,7 +148,7 @@ def main():
 
     root.withdraw()
 
-    reminders = []
+    reminders: list[Reminder] = []
 
     i=0
 
@@ -172,7 +172,13 @@ def main():
 
         action: str | None = parser(tokens, reminders[i])
 
-        set_reminder(root, reminders[i].message, reminders[i].duration)
+        try:
+            reminders[i].validate_reminder()
+            set_reminder(root, reminders[i].message, reminders[i].duration) # type: ignore
+
+        except ValueError as e:
+            print("ValueError:", e)
+
 
         if action == "exit":
 
