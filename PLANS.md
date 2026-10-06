@@ -31,10 +31,14 @@ Note: Development plans are subject to change.
 
 ## v0.3.0
 * [ ] Add persistent data storage of reminders
-* [ ] Persistent reminders on startup
+* [ ] Introduce CHANGELOG
 
 ## v0.3.1
-* [ ] Introduce CHANGELOG
+* [ ] Allow reminder deletation
+* [ ] Add a get reminder method with syntax
+
+## v0.3.2
+* [ ] Persistent reminders on startup
 
 ## v1.0.0
 
