@@ -1,7 +1,4 @@
-from gui import set_reminder
-
-import tkinter as tk
-
+from gui import GUI
 
 
 class Reminder:
@@ -31,10 +28,6 @@ class Reminder:
 
         if self.type is None:
             raise ValueError("Unspecified reminder type. Use 'remind' or 'repeat' tag to specify the duration of reminder.\nEx: 'remind for \"Give Tom a massage\" in 1h'")
-    
-    def submit(self, root: tk.Tk):
-
-        set_reminder(root, self.message, self.duration) # type: ignore
 
 
 
@@ -146,10 +139,7 @@ def convert_duration(duration: str) -> int:
 
 def main():
 
-    root = tk.Tk()
-
-    root.withdraw()
-
+    gui = GUI()
     reminders: list[Reminder] = []
 
     i=0
@@ -162,9 +152,9 @@ def main():
 
             continue
 
-        if prompt == "exit":
+        elif prompt == "exit":
 
-            root.destroy()
+            gui.destroy()
 
             break
 
@@ -176,7 +166,7 @@ def main():
 
         try:
             reminders[i].validate()
-            reminders[i].submit(root)
+            gui.set_reminder(reminders[i].message, reminders[i].duration)
 
         except ValueError as e:
             print("ValueError:", e)
@@ -184,18 +174,15 @@ def main():
 
         if action == "exit":
 
-            root.destroy()
+            gui.destroy()
 
             break
 
             # *TODO make exit not quit the background reminder process*
 
-        
-
         i+=1
 
-    root.mainloop()
-
+    gui.run()
 
 
 if __name__ == "__main__":
