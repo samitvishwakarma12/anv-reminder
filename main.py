@@ -4,15 +4,13 @@ import tkinter as tk
 
 
 
-
-
 class Reminder:
     reminder_types = {"remind", "repeat"}
 
     def __init__(self) -> None:
         self.type = None
-        self.duration = 0
-        self.message = ""
+        self.duration = None
+        self.message = "" # Empty messages are allowed
 
 
     def set_reminder_type(self, reminder_type: str):
@@ -26,6 +24,15 @@ class Reminder:
 
     def set_reminder_duration(self, duration: int):
         self.duration = duration
+
+    def validate_reminder(self):
+        if not self.duration:
+            raise SyntaxError("Unspecified reminder duration. Use 'in' tag to specify the duration of reminder.\nUsage: 'in <duration>' Example: remind for \"Give Tom a massage\" in 5h")
+
+        if not self.type:
+            raise SyntaxError("Unspecified reminder duration. Use 'remind' or 'repeat' tag to specify the duration of reminder.\nEx: 'remind for \"Give Tom a massage\" in 1h'")
+    
+
 
 
 
