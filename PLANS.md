@@ -26,8 +26,8 @@ Note: Development plans are subject to change.
 
 ## v0.2.2
 * [x] Update documentation
-* [ ] Move reminder submission into `Reminder` class
-* [ ] Fix tkinter mainloop and exit bugs
+* [x] Move reminder submission into `Reminder` class
+* [x] Rework the GUI architecture
 
 ## v0.3.0
 * [ ] Add persistent data storage of reminders
