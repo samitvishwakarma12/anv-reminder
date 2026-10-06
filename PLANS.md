@@ -22,11 +22,11 @@ Note: Development plans are subject to change.
 * [x] Release v0.2.0
 
 ## v0.2.1
-* [ ] Improve input validation
+* [x] Improve input validation
 
 ## v0.2.2
 * [ ] Fix tkinter mainloop and exit bugs
-* [ ] Update documentation
+* [x] Update documentation
 
 ## v0.3.0
 * [ ] Add persistent data storage of reminders

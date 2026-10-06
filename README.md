@@ -6,7 +6,7 @@ ANVReminder lets you create reminders directly from the terminal using a small c
 
 ## Beta
 
-This is an early beta release. The current goal is to establish the core reminder functionality and develop the command syntax before adding more advanced features.
+ANVReminder is currently in beta. The project is focused on developing a simple and flexible reminder system while gradually introducing reminder management, persistence, and more advanced scheduling features.
 
 ## Usage
 
@@ -20,12 +20,12 @@ ANVReminder will set the reminder and trigger a notification after the specified
 
 ### Available Syntax
 
-| Syntax | Description |
-|--------|-------------|
-| `remind` | Creates a one-off (`nonce`) reminder |
-| `in` | Specifies the reminder duration |
-| `for` | Specifies the reminder message |
-| `exit` | Exits the program |
+|Syntax|Description|
+|-|-|
+|`remind`|Creates a one-off reminder|
+|`in`|Specifies the reminder duration|
+|`for`|Specifies the reminder message|
+|`exit`|Exits the program|
 
 ### Duration Formats
 
@@ -47,7 +47,6 @@ A number without a unit is interpreted as milliseconds.
 
 ```text
 ANVReminder BETA...
-
 remind in 30m for "Drink some water"
 ```
 
@@ -82,29 +81,29 @@ Parser
     ↓
 Reminder
     ↓
-Duration Conversion
-    ↓
-Reminder Scheduler
-    ↓
 Tkinter Notification
 ```
 
+Duration conversion is performed while parsing the reminder input.
+
 The command parser was implemented from scratch rather than relying on a command-line argument parsing library.
 
-Each reminder currently has a type. The `remind` command assigns the `nonce` type, representing a one-off reminder. The reminder type system is currently groundwork for future reminder types such as recurring reminders.
+Each reminder currently has a type. The `remind` type represents a one-off reminder, while the `repeat` type is currently groundwork for future recurring reminders.
 
-## Planned Features
+## Development
 
-Possible future improvements include:
+Development plans and upcoming milestones are maintained in [`PLANS.md`](PLANS.md).
 
-* Recurring reminders
-* Reminder management and cancellation
-* Persistent reminders
-* Better input validation
-* Improved notification UI
+The current development roadmap includes:
+
+* Input validation
+* Tkinter stability improvements
+* Persistent reminder storage
+* Repeating reminders
+* Reminder cancellation
+* Active reminder listing
+* Improved reminder management
 * More flexible duration syntax
-* More expressive command syntax
-* Reminder presets and aliases
 
 ## Requirements
 
@@ -115,4 +114,4 @@ Possible future improvements include:
 
 **Open Beta**
 
-The project is actively being developed and the command syntax is subject to change.
+The project is actively being developed. The command syntax and internal architecture may change as new features are introduced.
