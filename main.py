@@ -32,7 +32,9 @@ class Reminder:
         if self.type is None:
             raise ValueError("Unspecified reminder type. Use 'remind' or 'repeat' tag to specify the duration of reminder.\nEx: 'remind for \"Give Tom a massage\" in 1h'")
     
+    def submit(self, root: tk.Tk):
 
+        set_reminder(root, self.message, self.duration) # type: ignore
 
 
 
@@ -174,7 +176,7 @@ def main():
 
         try:
             reminders[i].validate()
-            set_reminder(root, reminders[i].message, reminders[i].duration) # type: ignore
+            reminders[i].submit(root)
 
         except ValueError as e:
             print("ValueError:", e)
